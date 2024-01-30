@@ -26,6 +26,9 @@ function renderCats(cats) {
     })
     .join('');
   select.insertAdjacentHTML('beforeend', markup);
+  const catInfo = cats.map(cat => {
+    return `<img>${cat.}</img>`;
+  });
 }
 
 axios.defaults.headers.common[
