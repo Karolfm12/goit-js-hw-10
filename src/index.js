@@ -1,38 +1,30 @@
 import axios from 'axios';
-
+import { fetchCats } from './cat-api';
 const select = document.querySelector('.breed-select');
 const info = document.querySelector('.cat-info');
-const url = 'https://api.thecatapi.com/v1/breeds';
 
 select.addEventListener('click', e => {
   e.preventDefault();
+  const selectedBreed = e.target.value;
   fetchCats()
     .then(cats => renderCats(cats))
     .catch(error => console.log(error));
 });
 
-const fetchCats = () => {
-  return fetch(url).then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
-  });
-};
-
 function renderCats(cats) {
-  const markup = cats
-    .map(cat => {
-      return `<option>${cat.name}</option>`;
+  const optionsMarkup = cats
+    .map((cat, i) => {
+      return `<option>${i + ' ' + cat.name}</option>`;
     })
     .join('');
-  select.insertAdjacentHTML('beforeend', markup);
-  const catInfo = cats.find(cat => {
-    return `<a href="${cat.cfa_url}"><img></img></a>`;
-  });
+  select.insertAdjacentHTML('beforeend', optionsMarkup);
+  const catInfo = cats
+    .map(cat => {
+      return `<a href="${cat.cfa_url}"><img src=""></a>`;
+    })
+    .join('');
   info.insertAdjacentHTML('afterbegin', catInfo);
+  // info.innerHTML = catInfo;
 }
-
-axios.defaults.headers.common[
-  'live_nMDJKc8zVDAlgSqaHkKd04wrQCeOb5cJYxoNKNEjzHvnsHOOTEg79WBJLZrdfHv2'
-] = 'твой ключ';
+axios.defaults.headers.common['x-api-key'] =
+  'live_nMDJKc8zVDAlgSqaHkKd04wrQCeOb5cJYxoNKNEjzHvnsHOOTEg79WBJLZrdfHv2';
