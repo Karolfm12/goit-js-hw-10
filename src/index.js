@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const select = document.querySelector('.breed-select');
+const info = document.querySelector('.cat-info');
 const url = 'https://api.thecatapi.com/v1/breeds';
 
 select.addEventListener('click', e => {
@@ -26,9 +27,10 @@ function renderCats(cats) {
     })
     .join('');
   select.insertAdjacentHTML('beforeend', markup);
-  const catInfo = cats.map(cat => {
-    return `<img>${cat.}</img>`;
+  const catInfo = cats.find(cat => {
+    return `<a href="${cat.cfa_url}"><img></img></a>`;
   });
+  info.insertAdjacentHTML('afterbegin', catInfo);
 }
 
 axios.defaults.headers.common[
