@@ -6,25 +6,29 @@ const info = document.querySelector('.cat-info');
 select.addEventListener('click', e => {
   e.preventDefault();
   const selectedBreed = e.target.value;
+  console.log(selectedBreed);
   fetchCats()
     .then(cats => renderCats(cats))
     .catch(error => console.log(error));
 });
 
-function renderCats(cats) {
+function renderCats(cats, selectedBreed) {
   const optionsMarkup = cats
     .map((cat, i) => {
-      return `<option>${i + ' ' + cat.name}</option>`;
+      return `<option>${cat.name}</option>`;
     })
     .join('');
   select.insertAdjacentHTML('beforeend', optionsMarkup);
-  const catInfo = cats
-    .map(cat => {
-      return `<a href="${cat.cfa_url}"><img src=""></a>`;
-    })
-    .join('');
-  info.insertAdjacentHTML('afterbegin', catInfo);
-  // info.innerHTML = catInfo;
+
+  const selectedCat = cats.find(cat => {
+    if (cat.name === selectedBreed) {
+      const catInfo = `<a href="${selectedCat.cfa_url}"><img src="${selectedCat.vetstreet_url}"></a>`;
+
+      info.insertAdjacentHTML('afterbegin', catInfo);
+    } else {
+      info.innerHTML = '';
+    }
+  });
 }
 axios.defaults.headers.common['x-api-key'] =
   'live_nMDJKc8zVDAlgSqaHkKd04wrQCeOb5cJYxoNKNEjzHvnsHOOTEg79WBJLZrdfHv2';
