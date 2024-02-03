@@ -1,0 +1,9 @@
+.cat-info {
+  display: flex;
+  gap: 50px;
+  padding-top: 30px;
+}
+
+.catimg {
+  width: 40%;
+}
