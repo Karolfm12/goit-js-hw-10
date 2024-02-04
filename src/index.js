@@ -1,3 +1,4 @@
+import Notiflix from 'notiflix';
 import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
 import { fetchCats, fetchCatsByID } from './cat-api';
@@ -35,6 +36,11 @@ select.addEventListener('change', e => {
       errorParagraph.style.display = 'block';
       markup = '';
       catContainer.innerHTML = markup;
+      loaderAnimation.style.display = 'none';
+
+      Notiflix.Notify.failure(
+        'Oops! Something went wrong! Try reloading the page!'
+      );
     });
 });
 
