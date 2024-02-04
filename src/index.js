@@ -1,5 +1,8 @@
+import SlimSelect from 'slim-select';
+import 'slim-select/dist/slimselect.css';
 import { fetchCats, fetchCatsByID } from './cat-api';
-const select = document.querySelector('.breed-select');
+
+const select = document.querySelector('#sel');
 const catContainer = document.querySelector('.cat-info');
 const loaderParagraph = document.querySelector('.loader');
 const errorParagraph = document.querySelector('.error');
@@ -19,13 +22,15 @@ select.addEventListener('change', e => {
       const temperament = catData[0].breeds[0].temperament;
 
       let markup = `<img src=${imageURL} class="catimg"><div><h1>${header}</h1><p>${description}</p><p><b>Temperament:</b> ${temperament}</p></div>`;
-      // catContainer.insertAdjacentHTML('afterbegin', markup);
       catContainer.innerHTML = markup;
       loaderParagraph.style.display = 'none';
       errorParagraph.style.display = 'none';
     })
     .catch(error => {
+      loaderParagraph.style.display = 'none';
       errorParagraph.style.display = 'block';
+      markup = '';
+      catContainer.innerHTML = markup;
     });
 });
 
@@ -38,7 +43,7 @@ fetchCats()
       select.appendChild(option);
     });
     new SlimSelect({
-      select: document.querySelector('#sel'),
+      select: '#sel',
       settings: {
         placeholderText: 'choose your cat',
       },

@@ -7,3 +7,12 @@
 .catimg {
   width: 40%;
 }
+
+.loader,
+.error {
+  font-weight: 900;
+}
+
+.error {
+  color: red;
+}
