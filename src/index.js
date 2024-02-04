@@ -6,13 +6,16 @@ const select = document.querySelector('#sel');
 const catContainer = document.querySelector('.cat-info');
 const loaderParagraph = document.querySelector('.loader');
 const errorParagraph = document.querySelector('.error');
+const loaderAnimation = document.querySelector('.loaderAnimation');
 
 loaderParagraph.style.display = 'none';
 errorParagraph.style.display = 'none';
+loaderAnimation.style.display = 'none';
 
 select.addEventListener('change', e => {
   e.preventDefault();
   loaderParagraph.style.display = 'block';
+  loaderAnimation.style.display = 'block';
   const breedID = select.value;
   fetchCatsByID(breedID)
     .then(catData => {
@@ -20,6 +23,7 @@ select.addEventListener('change', e => {
       const header = catData[0].breeds[0].name;
       const description = catData[0].breeds[0].description;
       const temperament = catData[0].breeds[0].temperament;
+      loaderAnimation.style.display = 'none';
 
       let markup = `<img src=${imageURL} class="catimg"><div><h1>${header}</h1><p>${description}</p><p><b>Temperament:</b> ${temperament}</p></div>`;
       catContainer.innerHTML = markup;
